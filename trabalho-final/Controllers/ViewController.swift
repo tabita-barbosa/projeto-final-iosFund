@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     }
     
     func setupView() {
-        navigationItem.title = "Escolha a fabricante"
+        navigationItem.title = "tela inicial"
         self.setupHierarchy()
         self.setupConstraints()
         self.manufacturesTable.dataSource = self
@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         stack.axis = .vertical
         stack.alignment = .fill
         stack.distribution = .fill
-        stack.spacing = 10
+        stack.spacing = 20
         return stack
     }()
     
@@ -55,14 +55,19 @@ class ViewController: UIViewController {
         label.text = "Escolha a fabricante:"
         label.font = UIFont.boldSystemFont(ofSize: 18.0)
         label.textAlignment = .center
-//        label.backgroundColor = lightBlueColor
+        return label
+    }()
+    
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "faça o checklist do seu voo pelo app!"
+        label.textAlignment = .center
         return label
     }()
     
     private lazy var manufacturesTable: UITableView = {
         let table = UITableView()
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-//        table.backgroundColor = lightBlueColor
         return table
     }()
     
@@ -86,6 +91,7 @@ class ViewController: UIViewController {
 extension ViewController {
     func setupHierarchy() {
         view.addSubview(self.contentStack)
+        self.contentStack.addArrangedSubview(self.descriptionLabel)
         self.contentStack.addArrangedSubview(self.titleManufacturers)
         self.contentStack.addArrangedSubview(self.manufacturesTable)
     }
@@ -101,7 +107,7 @@ extension ViewController {
             contentStack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             contentStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentStack.heightAnchor.constraint(equalToConstant: 300.0),
-            contentStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            contentStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24.0),
             contentStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24.0)
         ])
     }
@@ -117,7 +123,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
         var content = cell.defaultContentConfiguration()
         content.text = companies[indexPath.row]
-//        content.text.textAlignment = .center
+        content.textProperties.alignment = .center
+        cell.backgroundColor = lightBlueColor
+        cell.layer.cornerRadius = 10
         
         cell.contentConfiguration = content
         return cell

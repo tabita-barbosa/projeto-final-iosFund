@@ -39,6 +39,7 @@ class ChecklistViewController: UIViewController {
     
     func setupView() {
         navigationItem.title = "Checklist"
+        navigationItem.backAction?.title = "voltar"
         self.setupHierarchy()
         self.setupConstraints()
         self.checklistPopulate(type: self.type)
@@ -179,15 +180,16 @@ extension ChecklistViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.backgroundColor = UIColor(named: "lightBlue")
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.backgroundColor = .white
         tableView.cellForRow(at: indexPath)?.accessoryType = .none
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return items[section].checklistType
     }
-
 }
